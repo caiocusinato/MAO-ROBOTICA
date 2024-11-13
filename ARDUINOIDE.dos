@@ -1,0 +1,94 @@
+#include <Servo.h>
+#define servoPin1 2
+#define servoPin2 3
+#define servoPin3 4 
+#define servoPin4 5
+#define servoPin5 6
+Servo servo1;
+Servo servo2;
+Servo servo3;
+Servo servo4;
+Servo servo5; 
+int time = 100;
+int ang1 = 180;
+int ang2 = 0;
+void setup() {
+  Serial.begin(9600);
+  Serial.setTimeout(1);
+  
+  Serial.begin(9600);
+  Serial.setTimeout(1);
+  servo1.attach(servoPin1);
+  servo2.attach(servoPin2);
+  servo3.attach(servoPin3);
+  servo4.attach(servoPin4);
+  servo5.attach(servoPin5);
+}
+void loop() {
+  if(Serial.available()>0){
+    char command = Serial.read();
+    if(command == '$'){
+      String stringRecebida = Serial.readStringUntil('\n');
+      Serial.println(stringRecebida);
+      for(int i=0;i<5;i++){
+        char c = stringRecebida.charAt(i);
+        delay(20);
+        switch(i){
+          case 0: 
+            if(c=='1'){
+              servo1.write(ang1);
+              delay(time);
+            }else{
+              servo1.write(ang2);
+              delay(time);
+            }
+            break;
+
+          case 1: 
+            if(c=='1'){
+              servo2.write(ang1);
+              delay(time);
+            }else{
+              servo2.write(ang2);
+              delay(time);
+            }
+            break;
+
+          case 2: 
+            if(c=='1'){
+              servo3.write(ang1);
+              delay(time);
+            }else{
+              servo3.write(ang2);
+              delay(time);
+            }
+            break;
+
+          case 3: 
+            if(c=='1'){
+              servo4.write(ang2);
+              delay(time);
+            }else{
+              servo4.write(ang1);
+              delay(time);
+            }
+            break;
+                                                                                                                           
+          case 4: 
+            if(c=='1'){
+              servo5.write(ang1);
+              delay(time);
+            }else{
+              servo5.write(ang2);
+              delay(time);
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+  }
+  Serial.flush();
+}
